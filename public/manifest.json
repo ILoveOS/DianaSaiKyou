@@ -38,5 +38,8 @@
     "web_accessible_resources": [{
         "resources": ["/assets/*"],
         "matches": ["<all_urls>"]
-      }]
+      }],
+      "host_permissions":[
+        "https://music.163.com/*"
+      ]
 }

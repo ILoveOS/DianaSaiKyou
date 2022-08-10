@@ -3,6 +3,8 @@
  * @author 澄茜早睡早起
  */
 
+import { weapiParam } from "./weapi"
+
 /**
  * 时间类
  */
@@ -49,7 +51,7 @@ export const PAGESIZE = 30
  * 网易云api
  */
 const API = {
-    djPrograms: 'https://netease-cloud-music-api-orpin-pi.vercel.app/dj/program',
+    djPrograms: 'https://music.163.com/weapi/dj/program/byradio',
     songUrlPattern: 'https://music.163.com/song/media/outer/url?id=#{id}.mp3'
 }
 /**
@@ -87,7 +89,7 @@ export const loadMusics = (playlistRid, curPage, callback) => {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 var res = JSON.parse(xhr.responseText)
-                if (res.code != 400) {
+                if (res.code != 400 &&res.programs!=null) {
                     let result = {}
                     result.count = res.count
                     result.musics = [{}]
@@ -102,8 +104,15 @@ export const loadMusics = (playlistRid, curPage, callback) => {
             }
         }
     }
-    xhr.open('GET', `${API.djPrograms}?rid=${playlistRid}&limit=${PAGESIZE}&offset=${curPage * PAGESIZE}`);
-    xhr.send();
+    var data={
+        radioId: playlistRid,
+        limit: PAGESIZE,
+        offset: curPage*PAGESIZE,
+    }
+    xhr.open('POST',API.djPrograms)
+    xhr.setRequestHeader('crypto','weapi')
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+    xhr.send(weapiParam(data))
 }
 /**
  * 将播放进度转化为HH:MM:SS/HH:MM:SS格式的字符串
