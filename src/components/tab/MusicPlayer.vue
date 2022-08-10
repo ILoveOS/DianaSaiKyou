@@ -1,21 +1,35 @@
+<!--音乐播放器-->
 <template>
     <div style="position:fixed;width: 100%; bottom: 20px;" class="text-center">
+        <!--音乐的Cover图片-->
         <img width="80" height="80" :src="musics[idx].cover==null?'/assets/musiccover.png':musics[idx].cover" @error="defaultMusicCover">
+        <!--名字-->
         <h4>{{ musics[idx].name }}</h4>
+        <!--HH:MM:SS/HH:MM:SS格式的进度-->
         <span class="text-muted">{{ progressText() }}</span>
+        <!--播放器-->
         <video id="player" hidden :src="musics[idx].src" @canplay="init" @timeupdate="update" @ended="next"></video>
+        <!--进度条-->
         <div id="progress" @click="seek" class="progress" style="height: 10px; overflow: visible;">
             <div class="progress-bar" role="progressbar" :style="{ width: `${current / player.duration * 100}%` }"
                 :aria-valuenow="current" aria-valuemin="0" :aria-valuemax="player.duration"></div>
+            <!--进度条前面的图标-->
             <img :src="$parent.Options.progressIcon" width="30" height="30"
                 style="z-index: 9999;margin-left: -15px;margin-top: -10px;" @error="defaultProgressIcon">
         </div>
+        <!--音量-->
         <input type="range" min="0" max="1" step="0.05" v-model="player.volume">
+        <!--工具栏-->
         <div style="font-size: 36px; vertical-align: middle;">
+            <!--上一首-->
             <i class="bi bi-skip-start-fill" @click="pre"></i>
+            <!--播放-->
             <i class="bi bi-play-fill" @click="play" :style="{ display: playing ? 'none' : 'inline' }"></i>
+            <!--暂停-->
             <i class="bi bi-pause-fill" @click="pause" :style="{ display: playing ? 'inline' : 'none' }"></i>
+            <!--下一首-->
             <i class="bi bi-skip-end-fill" @click="next"></i>
+            <!--播放列表-->
             <div class="btn-group dropup" style="position: fixed; right: 0;">
                 <i class="bi bi-list dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
                 <ul class="dropdown-menu" style="max-height: 500px;overflow-y: scroll;">
@@ -45,18 +59,32 @@ export default {
     props: ['_playList'],
     data() {
         return {
+            //播放器
             player: {},
+            //播放列表
             musics: [{}],
+            //当前音乐
             idx: 0,
+            //电台节目音乐总数
             count: 0,
+            //当前页
             curPage: 0,
+            //播放进度
             current: 0,
+            //player是否加载完成
             canplay: false,
+            //播放状态
             playing: false,
+            //musics是否加载完成
             loaded: false
         }
     },
     watch: {
+        /**
+         * 当_playList选项加载/修改后重新加载musics
+         * @param {number} newVal 新值 
+         * @param {number} oldVal 
+         */
         _playList(newVal, oldVal) {
             loadMusics(newVal, this.curPage, result => {
                 this.musics = result.musics
@@ -64,33 +92,58 @@ export default {
                 this.loaded = true
             })
         },
+        /**
+         * 当idx修改后重新加载player
+         * @param {number} newVal 
+         * @param {number} oldVal 
+         */
         idx(newVal, oldVal) {
             this.canplay = false
         }
     },
     methods: {
+        /**
+         * 将秒数转化为HH:MM:SS格式
+         * @param {number} s 秒数
+         */
         time(s) {
             return new Time(Math.floor(s / 1000)).toString()
         },
+        /**
+         * HH:MM:SS/HH:MM:SS格式的播放进度
+         */
         progressText() {
             return progressTimeFormat(this.canplay, this.current, this.player.duration)
         },
+        /**
+         * 默认进度条图片
+         * @param {Event} e 
+         */
         defaultProgressIcon(e) {
             console.log(e)
             var ele = e.srcElement
             ele.src = '/assets/progress.png'
             ele.onerror = null
         },
+        /**
+         * 播放
+         */
         play() {
             if (this.canplay) {
                 this.player.play()
                 this.playing = true
             }
         },
+        /**
+         * 暂停
+         */
         pause() {
             this.playing = false
             this.player.pause()
         },
+        /**
+         * 下一首
+         */
         next() {
             if (this.loaded) {
                 if (this.idx + 1 >= this.musics.length) {
@@ -104,6 +157,9 @@ export default {
                 } else this.idx = this.idx + 1
             }
         },
+        /**
+         * 上一首
+         */
         pre() {
             if (this.loaded) {
                 if (this.idx - 1 < 0) {
@@ -120,14 +176,24 @@ export default {
                 else this.idx = this.idx - 1
             }
         },
+        /**
+         * player加载完成后设置属性
+         */
         init() {
             this.canplay = true
             if (this.playing) this.play()
         },
+        /**
+         * 更新进度
+         */
         update() {
             if (this.canplay)
                 this.current = this.player.currentTime
         },
+        /**
+         * 修改进度
+         * @param {event} e 
+         */
         seek(e) {
             if (this.canplay) {
                 this.canplay = false
@@ -136,6 +202,10 @@ export default {
                 this.current = this.player.currentTime
             }
         },
+        /**
+         * 默认音乐Cover
+         * @param {event} e 
+         */
         defaultMusicCover(e){
             var ele=e.srcElement
             ele.src='/assets/musiccover.png'
@@ -143,6 +213,9 @@ export default {
         }
     },
     mounted() {
+        /**
+         * 设置player并加载musics
+         */
         this.player = document.getElementById('player')
         loadMusics(this._playList, this.curPage, result => {
             this.musics = result.musics
