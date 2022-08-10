@@ -1,5 +1,10 @@
 
 /**
+ * 对background.js中的服务进行包装供src中的组件使用
+ * @author 澄茜早睡早起
+ */
+
+/**
  * 调用background.js中的service
  * @param {string} service 服务名
  * @param {object} params 参数

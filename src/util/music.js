@@ -1,4 +1,9 @@
 /**
+ * 用于MusicPlayer的工具类
+ * @author 澄茜早睡早起
+ */
+
+/**
  * 时间类
  */
 export class Time {
