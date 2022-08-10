@@ -8,7 +8,7 @@
         "48":"/assets/icon.png",
         "128":"/assets/icon.png"
     },
-    "description":"",
+    "description":"嘉然最強！",
     "action": {
         "default_title": "Popup",
         "default_popup": "popup.html"
