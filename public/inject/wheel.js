@@ -89,13 +89,18 @@ if (location.pathname.match(/\/[0-9]+.*/)) {
     WHEEL_WRAPPER.height = 150
     WHEEL_WRAPPER.append(WHEEL_BUTTON)
     document.body.append(WHEEL_WRAPPER)
-    chrome.runtime.sendMessage(chrome.storage.local.get('Options', res => {
-        let options = res['Options']
-        WHEEL_DATA.msg = options.wheelText
-        WHEEL_CONFIG.WHEEL_INTERVAL = options.wheelInterval
-        WHEEL_CONFIG.WHEEL_START_IMG = options.wheelStartImg
-        WHEEL_CONFIG.WHEEL_PAUSE_IMG = options.wheelPauseImg
-        WHEEL_CONFIG.WHEEL_LOADED = true
-        WHEEL_BUTTON.src = WHEEL_CONFIG.WHEEL_RUNNING ? WHEEL_CONFIG.WHEEL_START_IMG : WHEEL_CONFIG.WHEEL_PAUSE_IMG
-    }))
+    chrome.runtime.sendMessage({service:'getOption',params:{}}, res => {
+        if (res.code == 0) {
+            let options = res.data
+            WHEEL_DATA.msg = options.wheelText
+            console.log(WHEEL_DATA)
+            WHEEL_CONFIG.WHEEL_INTERVAL = options.wheelInterval
+            WHEEL_CONFIG.WHEEL_START_IMG = options.wheelStartImg
+            WHEEL_CONFIG.WHEEL_PAUSE_IMG = options.wheelPauseImg
+            WHEEL_CONFIG.WHEEL_LOADED = true
+            WHEEL_BUTTON.src = WHEEL_CONFIG.WHEEL_RUNNING ? WHEEL_CONFIG.WHEEL_START_IMG : WHEEL_CONFIG.WHEEL_PAUSE_IMG
+        } else {
+            console.log(res.message)
+        }
+    })
 }
