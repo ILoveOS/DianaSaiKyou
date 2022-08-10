@@ -214,14 +214,9 @@ export default {
     },
     mounted() {
         /**
-         * 设置player并加载musics
+         * 设置player
          */
         this.player = document.getElementById('player')
-        loadMusics(this._playList, this.curPage, result => {
-            this.musics = result.musics
-            this.count = result.count
-            this.loaded = true
-        })
     }
 }
 </script>
