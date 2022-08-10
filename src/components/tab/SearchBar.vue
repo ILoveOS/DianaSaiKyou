@@ -2,7 +2,6 @@
     <div class="text-center">
         <div class="container-fluid" style="width: 65%;">
         <img :src="$parent.Options.icon" @error="defaultIcon" width="100" height="100" class="mt-5">
-        <h3 class="mt-3">{{time}}</h3>
         <div class="input-group mt-4">
             <select class="form-select" v-model="searchTool" style="max-width: 10%;">
                 <option value="0">百度</option>

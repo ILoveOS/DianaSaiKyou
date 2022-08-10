@@ -11,6 +11,7 @@ const callService=(service,params,callback)=>{
         }
     })
 }
+
 export const Services={
     setOption(options,callback){
         callService('setOption',{options:options},res=>callback(res))

@@ -1,14 +1,7 @@
-/**
- * 时间类
- */
 export class Time {
     hour = 0
     min = 0
     sec = 0
-    /**
-     * 
-     * @param {Number} 秒数 
-     */
     constructor(secs) {
         secs = Math.floor(secs)
         if (secs >= 60) {
@@ -22,10 +15,6 @@ export class Time {
             this.hour = Math.floor(this.min / 60)
         }
     }
-    /**
-     * 将时间转化为HH:MM:SS格式后返回
-     * @returns 格式化后的时间字符串
-     */
     toString() {
         let hFormat = ''
         let mFormat = ''
@@ -38,10 +27,12 @@ export class Time {
 }
 
 export const PAGESIZE = 30
+
 const API = {
     djPrograms: 'https://netease-cloud-music-api-orpin-pi.vercel.app/dj/program',
     songUrlPattern: 'https://music.163.com/song/media/outer/url?id=#{id}.mp3'
 }
+
 class music {
     id
     name
@@ -58,6 +49,7 @@ class music {
         this.src = API.songUrlPattern.replace('#{id}', o.mainSong.id);
     }
 }
+
 export const loadMusics = (playlistRid, curPage, callback) => {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
@@ -82,6 +74,7 @@ export const loadMusics = (playlistRid, curPage, callback) => {
     xhr.open('GET', `${API.djPrograms}?rid=${playlistRid}&limit=${PAGESIZE}&offset=${curPage * PAGESIZE}`);
     xhr.send();
 }
+
 export const progressTimeFormat = (canplay,current, duration) => {
     if (canplay) {
         let cur = new Time(current), dur = new Time(duration)

@@ -12,16 +12,6 @@ const DefaultOption = {
     wheelInterval: 7000
 }
 const Services = {
-    setStorage: (params, callback) => {
-        let obj = {}
-        obj[params.key] = params.value
-        chrome.storage.local.set(obj, callback(success(null, '存储设置成功')))
-    },
-    getStorage: (params, callback) => {
-        chrome.storage.local.get(params.key, res => {
-            callback(success(res[params.key], '存储获取成功'))
-        })
-    },
     setOption: (params, callback) => {
         chrome.storage.local.set({ Options: params.options }, callback(success(null, '选项设置成功')))
     },
