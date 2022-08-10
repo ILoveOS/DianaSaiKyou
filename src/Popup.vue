@@ -1,6 +1,6 @@
 <!--弹出页，显示插件信息-->
 <template>
-    <!--绑定选项中的color和backgourndColor到css中------>
+    <!--绑定选项中的color和backgourndColor到css中-->
     <div class="text-center" :style="{'--color':Options.color,'--backgroundColor':Options.backgroundColor}"  style="padding-left: 80px;padding-right:80px">
         <!--图标-->
         <img width="128" height="128" :src="manifest.icons[128]">

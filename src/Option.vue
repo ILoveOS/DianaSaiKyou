@@ -2,7 +2,7 @@
 <template>
     <!--标题-->
     <title>设置</title>
-    <!--绑定选项中的color和backgourndColor到css中---->
+    <!--绑定选项中的color和backgourndColor到css中-->
     <div id="option-main" class="text-center"
         :style="{ '--color': Options.color, '--backgroundColor': Options.backgroundColor }">
         <div class="pt-3 pb-3" style="width:30%;display: inline-block;">
