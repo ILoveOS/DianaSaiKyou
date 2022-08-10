@@ -28,8 +28,7 @@
                     <img :src="Options[idx]" @click="select(idx)" width="50" height="50">
                 </div>
                 <!--textarea-->
-                <textarea class="form-control" maxlength="40" v-if="OptionTypes[idx] == 'textarea'">
-                    v-model="Options[idx]">
+                <textarea class="form-control" maxlength="40" v-if="OptionTypes[idx] == 'textarea'" v-model="Options[idx]">
                 </textarea>
             </div>
             <!--保存和重置按钮-->
