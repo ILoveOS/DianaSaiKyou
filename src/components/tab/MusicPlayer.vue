@@ -1,6 +1,6 @@
 <template>
     <div style="position:fixed;width: 100%; bottom: 20px;" class="text-center">
-        <img width="80" height="80" :src="musics[idx].cover" @error="defaultMusicCover">
+        <img width="80" height="80" :src="musics[idx].cover==null?'/assets/musiccover.png':musics[idx].cover" @error="defaultMusicCover">
         <h4>{{ musics[idx].name }}</h4>
         <span class="text-muted">{{ progressText() }}</span>
         <video id="player" hidden :src="musics[idx].src" @canplay="init" @timeupdate="update" @ended="next"></video>
