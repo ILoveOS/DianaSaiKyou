@@ -24,7 +24,7 @@
                 </select>
                 <!--图片-->
                 <div v-if="OptionTypes[idx] == 'img'">
-                    <input hidden :id="idx" type="file" @change="upload(idx)">
+                    <input hidden :id="idx" type="file" @change="upload(idx)" accept="image/*">
                     <img :src="Options[idx]" @click="select(idx)" width="50" height="50">
                 </div>
                 <!--textarea-->
