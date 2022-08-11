@@ -32,6 +32,11 @@ npm run minor
 npm run patch
 ```
 
+## 打包
+```
+npm run pkg
+```
+
 ## 安装
 ```
 浏览器打开chrome://extension,启用开发人员模式->加载已解压的拓展->选择npm run build后生成的dist文件夹
