@@ -40,32 +40,16 @@ const rsaEncrypt = (buffer, key) => {
  * @param {object} object 
  * @returns 
  */
-const weapi = (object) => {
+export const weapiParam = (object) => {
   const text = JSON.stringify(object)
   const secretKey = crypto
     .randomBytes(16)
     .map((n) => base62.charAt(n % 62).charCodeAt())
-  return {
-    params: aesEncrypt(
-      Buffer.from(
-        aesEncrypt(Buffer.from(text), presetKey, iv).toString('base64'),
-      ),
-      secretKey,
-      iv,
-    ).toString('base64'),
-    encSecKey: rsaEncrypt(secretKey.reverse(), publicKey).toString('hex'),
-  }
-}
-/**
- * 生成weapi加密后的参数
- * @param {object} object 
- */
-export const weapiParam=object=>{
-  let ob=weapi(object)
-  let result=''
-  for(let i in ob){
-    result+=`${encodeURIComponent(i)}=${encodeURIComponent(ob[i])}&`
-  }
-  result=result.substring(0,result.lastIndexOf('&'))
-  return result
+  return `params=${encodeURIComponent(aesEncrypt(
+    Buffer.from(
+      aesEncrypt(Buffer.from(text), presetKey, iv).toString('base64'),
+    ),
+    secretKey,
+    iv,
+  ).toString('base64'))}&encSecKey=${encodeURIComponent(rsaEncrypt(secretKey.reverse(), publicKey).toString('hex'))}`
 }
