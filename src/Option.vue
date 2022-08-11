@@ -28,7 +28,8 @@
                     <img :src="Options[idx]" @click="select(idx)" width="50" height="50">
                 </div>
                 <!--textarea-->
-                <textarea class="form-control" maxlength="40" v-if="OptionTypes[idx] == 'textarea'" v-model="Options[idx]">
+                <textarea class="form-control" maxlength="40" v-if="OptionTypes[idx] == 'textarea'"
+                    v-model="Options[idx]">
                 </textarea>
             </div>
             <!--保存和重置按钮-->
@@ -36,6 +37,9 @@
             <button @click="clearOption" class="btn btn-danger" style="margin-left:20px">重置</button>
         </div>
     </div>
+    <!--cursor跟随图片-->
+    <img style="position:fixed;z-index: 99999;" :width="Options.cursorSize" :height="Options.cursorSize"
+        :src="Options.cursor" id="CURSOR">
 </template>
 <script>
 import { Services } from './util/service'
@@ -57,6 +61,8 @@ export default {
                 backgroundColor: '背景色',
                 searchTool: '默认搜索引擎',
                 icon: '图标',
+                cursor: '光标附加图片',
+                cursorSize: '光标附加图片大小',
                 progressIcon: '进度条图标',
                 playList: '播单rid',
                 wheelText: '独轮车内容',
@@ -73,6 +79,8 @@ export default {
                 backgroundColor: 'color',
                 searchTool: 'select',
                 icon: 'img',
+                cursor: 'img',
+                cursorSize: 'number',
                 progressIcon: 'img',
                 playList: 'text',
                 wheelText: 'textarea',
@@ -90,6 +98,11 @@ export default {
     },
     mounted() {
         this.getOption()
+        /**设置cursor跟随事件 */
+        window.onmousemove = (event) => {
+            document.getElementById('CURSOR').style.left = event.clientX + 20 + 'px'
+            document.getElementById('CURSOR').style.top = event.clientY + 'px'
+        }
     },
     methods: {
         /**

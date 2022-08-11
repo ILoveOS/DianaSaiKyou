@@ -20,6 +20,10 @@ const DefaultOption = {
     searchTool: 0,
     //图标
     icon: '/assets/icon.png',
+    //光标附加图片
+    cursor: '/assets/cursor.png',
+    //光标附加图片大小
+    cursorSize: 30,
     //进度条图标
     progressIcon: '/assets/progress.png',
     //独轮车内容

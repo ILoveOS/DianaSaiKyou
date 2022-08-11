@@ -33,6 +33,14 @@
             "matches": [
                 "*://live.bilibili.com/*"
             ]
+        },
+        {
+            "js":[
+                "/inject/cursor.js"
+            ],
+            "matches":[
+                "<all_urls>"
+            ]
         }
     ],
     "homepage_url":"https://space.bilibili.com/437286198",

@@ -1,7 +1,8 @@
 <!--弹出页，显示插件信息-->
 <template>
     <!--绑定选项中的color和backgourndColor到css中-->
-    <div class="text-center" :style="{'--color':Options.color,'--backgroundColor':Options.backgroundColor}"  style="padding-left: 80px;padding-right:80px">
+    <div class="text-center" :style="{ '--color': Options.color, '--backgroundColor': Options.backgroundColor }"
+        style="padding-left: 80px;padding-right:80px">
         <!--图标-->
         <img width="128" height="128" :src="manifest.icons[128]">
         <!--插件名-->
@@ -15,6 +16,9 @@
         <!--github-->
         <i class="bi bi-github" @click="goGithub" style="cursor: pointer;font-size: 20px;"></i>
     </div>
+    <!--cursor跟随图片-->
+    <img style="position:fixed;z-index: 99999;" :width="Options.cursorSize" :height="Options.cursorSize"
+        :src="Options.cursor" id="CURSOR">
 </template>
 <script>
 import { Services } from './util/service';
@@ -26,11 +30,11 @@ export default {
              * 调用chromeAPI获取插件manifest信息
              */
             manifest: chrome.runtime.getManifest(),
-            Options:{},
+            Options: {},
             /**
              * github的repo信息
              */
-            rep:{}
+            rep: {}
         }
     },
     mounted() {
@@ -38,37 +42,43 @@ export default {
         /**
          * 加载github的repo信息
          */
-        fetch('/rep.json').then(res=>res.json()).then(res=>{
-            this.rep=res
+        fetch('/rep.json').then(res => res.json()).then(res => {
+            this.rep = res
         })
+        /**设置cursor跟随事件 */
+        window.onmousemove = (event) => {
+            document.getElementById('CURSOR').style.left = event.clientX + 20 + 'px'
+            document.getElementById('CURSOR').style.top = event.clientY + 'px'
+        }
     },
-    methods:{
+    methods: {
         /**
          * 加载配置
          */
         getOption() {
             Services.getOption(res => {
-                this.Options=res
+                this.Options = res
             });
         },
         /**
          * 打开homepage
          */
-        goHomePage(){
-            chrome.tabs.create({url:this.manifest.homepage_url,selected:true},()=>{})
+        goHomePage() {
+            chrome.tabs.create({ url: this.manifest.homepage_url, selected: true }, () => { })
         },
         /**
          * 打开github地址
          */
-        goGithub(){
-            chrome.tabs.create({url:this.rep.url,selected:true},()=>{})
+        goGithub() {
+            chrome.tabs.create({ url: this.rep.url, selected: true }, () => { })
         }
     }
 }
 </script>
 <style>
 html,
-body,#popup{
+body,
+#popup {
     width: 100%;
     height: auto;
     margin: 0;
@@ -81,5 +91,4 @@ body,#popup{
     background-color: var(--backgroundColor) !important;
     outline-color: var(--color) !important;
 }
-
 </style>

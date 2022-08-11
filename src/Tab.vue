@@ -15,6 +15,9 @@
         <!--音乐播放器，可以加载网易云电台播单-->
         <MusicPlayer :_playList="Options.playList"></MusicPlayer>
     </div>
+    <!--cursor跟随图片-->
+    <img style="position:fixed;z-index: 99999;" :width="Options.cursorSize" :height="Options.cursorSize"
+        :src="Options.cursor" id="CURSOR">
 </template>
 <script>
 import { Services } from './util/service'
@@ -31,6 +34,11 @@ export default {
     },
     mounted() {
         this.getOption();
+        /**设置cursor跟随事件 */
+        window.onmousemove = (event) => {
+            document.getElementById('CURSOR').style.left = event.clientX + 20 + 'px'
+            document.getElementById('CURSOR').style.top = event.clientY + 'px'
+        }
     },
     methods: {
         /**
