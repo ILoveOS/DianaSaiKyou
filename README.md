@@ -19,3 +19,13 @@ npm run build
 ```
 浏览器打开chrome://extension,启用开发人员模式->加载已解压的拓展->选择npm run build后生成的dist文件夹
 ```
+
+## 版本管理配置
+修改文件[repo.json](/public/repo.json)
+
+```
+owner->GitHub用户名
+repo->项目的仓库名称
+url->项目的github地址
+version->项目版本 
+```
