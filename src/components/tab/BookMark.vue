@@ -1,12 +1,16 @@
 <template>
     <div class="text-center">
+        <!--书签列表-->
         <div class="grid mt-3" style="display:inline-block;max-width:640px; height:240px;overflow-y:auto">
+            <!--书签条目-->
             <div class="card shadow-sm mt-3"
                 style="width:76px;height:100px;display:inline-block;margin-left:10px;margin-right:10px"
                 v-for="(item, i) in bookmarks" :key="i">
                 <a :href="item.url" style="text-decoration:none" target="blank">
+                    <!--图标-->
                     <img width="56" height="56" style="border-radius:50%;margin-top:10px" :src="item.icon"
                         @error="defaultBookmarkIcon">
+                    <!--标题-->
                     <div class="card-body"
                         style="overflow:hidden;text-overflow: ellipsis;white-space:nowrap;padding-top:4px;padding-bottom:0;padding-left:3px;padding-right:3px">
                         <span class="card-text" style="font-size:4px;">
@@ -16,6 +20,7 @@
                 </a>
             </div>
         </div>
+        <!--分页选择器-->
         <nav class="mt-2" v-if="pages > 1">
             <ul class="pagination justify-content-center">
                 <li class="page-item" @click="this.curPage = this.curPage <= 0 ? this.pages - 1 : this.curPage - 1">
@@ -36,6 +41,7 @@
     </div>
 </template>
 <script>
+import { Services } from '@/util/service';
 export default {
     name: 'BookMark',
     data() {
@@ -48,11 +54,15 @@ export default {
         }
     },
     methods: {
+        /**默认书签图标 */
         defaultBookmarkIcon(e) {
-            e.srcElement.src = '/assets/icon.png'
+            e.srcElement.src = this.$parent.Options.icon
         }
     },
     computed: {
+        /**
+         * 当前页的书签
+         */
         bookmarks() {
             let result = [];
             let offset = this.curPage * this.pageSize
@@ -63,6 +73,9 @@ export default {
         }
     },
     mounted() {
+        /**
+         * 读取所有的书签并计算分页一起获取图标
+         */
         Services.getBookmarks(res => {
             this.all = res
             this.total = this.all.length
@@ -73,11 +86,10 @@ export default {
                     if (res != null)
                         this.all[i].icon = res
                     else
-                        this.all[i].icon = '/assets/icon.png'
+                        this.all[i].icon = ''
                 })
             }
         })
     }
 }
-import { Services } from '@/util/service';
 </script>
