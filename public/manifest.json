@@ -1,54 +1,60 @@
 {
-    "name":"Diana最強",
-    "manifest_version":3,
-    "version":"1.0.0",
-    "author":"澄茜早睡早起",
-    "icons":{
-        "16":"/assets/icon.png",
-        "48":"/assets/icon.png",
-        "128":"/assets/icon.png"
+  "name": "Diana最強",
+  "manifest_version": 3,
+  "version": "1.0.0",
+  "author": "澄茜早睡早起",
+  "icons": {
+    "16": "/assets/icon.png",
+    "48": "/assets/icon.png",
+    "128": "/assets/icon.png"
+  },
+  "description": "嘉然最強！",
+  "action": {
+    "default_title": "Popup",
+    "default_popup": "popup.html"
+  },
+  "options_page": "option.html",
+  "chrome_url_overrides": {
+    "newtab": "tab.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "bookmarks"
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "/inject/wheel.js"
+      ],
+      "matches": [
+        "*://live.bilibili.com/*"
+      ]
     },
-    "description":"嘉然最強！",
-    "action": {
-        "default_title": "Popup",
-        "default_popup": "popup.html"
-    },
-    "options_page":"option.html",
-    "chrome_url_overrides":{
-        "newtab":"tab.html"
-    },
-    "background":{
-        "service_worker":"background.js"
-    },
-    "permissions":[
-        "storage",
-        "tabs",
-        "bookmarks"
-    ],
-    "content_scripts": [
-        {
-            "js": [
-                "/inject/wheel.js"
-            ],
-            "matches": [
-                "*://live.bilibili.com/*"
-            ]
-        },
-        {
-            "js":[
-                "/inject/cursor.js"
-            ],
-            "matches":[
-                "<all_urls>"
-            ]
-        }
-    ],
-    "homepage_url":"https://space.bilibili.com/437286198",
-    "web_accessible_resources": [{
-        "resources": ["/assets/*"],
-        "matches": ["<all_urls>"]
-      }],
-    "host_permissions":[
+    {
+      "js": [
+        "/inject/cursor.js"
+      ],
+      "matches": [
         "<all_urls>"
-    ]
+      ]
+    }
+  ],
+  "homepage_url": "https://space.bilibili.com/437286198",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
 }

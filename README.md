@@ -15,6 +15,23 @@ npm install
 npm run build
 ```
 
+## 发布release
+
+### 大版本更新
+```
+npm run major
+```
+
+### 小版本更新
+```
+npm run minor
+```
+
+### 补丁更新
+```
+npm run patch
+```
+
 ## 安装
 ```
 浏览器打开chrome://extension,启用开发人员模式->加载已解压的拓展->选择npm run build后生成的dist文件夹
