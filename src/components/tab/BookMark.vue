@@ -1,6 +1,6 @@
 <template>
     <div class="text-center">
-        <div class="grid mt-3" style="display:inline-block;max-width:640px; max-height:300px;overflow-y:auto">
+        <div class="grid mt-3" style="display:inline-block;max-width:640px; height:240px;overflow-y:auto">
             <div class="card shadow-sm mt-3"
                 style="width:76px;height:100px;display:inline-block;margin-left:10px;margin-right:10px"
                 v-for="(item, i) in bookmarks" :key="i">
@@ -15,28 +15,24 @@
                     </div>
                 </a>
             </div>
-            <nav class="mt-2" v-if="pages>1">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item" @click="this.curPage = this.curPage <= 0 ? this.pages - 1 : this.curPage - 1">
-                        <a class="page-link" href="#">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item" 
-                        @click="this.curPage = i - 1" 
-                        v-for="i in pages"
-                        :key="i"
-                        >
-                        <a class="page-link" href="#">{{ i }}</a>
-                    </li>
-                    <li class="page-item" @click="this.curPage = (this.curPage + 1) % this.pages">
-                        <a class="page-link" href="#">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
         </div>
+        <nav class="mt-2" v-if="pages > 1">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" @click="this.curPage = this.curPage <= 0 ? this.pages - 1 : this.curPage - 1">
+                    <a class="page-link" href="#">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" @click="this.curPage = i - 1" v-for="i in pages" :class="{active:curPage==i-1}" :key="i">
+                    <a class="page-link" href="#">{{ i }}</a>
+                </li>
+                <li class="page-item" @click="this.curPage = (this.curPage + 1) % this.pages">
+                    <a class="page-link" href="#">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </template>
 <script>
