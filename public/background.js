@@ -69,6 +69,54 @@ const Services = {
     clearOption: (params, callback) => {
         chrome.storage.local.set({ Options: null }, callback(success(DefaultOption, '选项重置成功')))
     },
+    /**
+     * 获得书签
+     * @param {object} params 参数
+     * @param {function} callback 回调函数 
+     */
+    getBookmarks: (params,callback)=>{
+        chrome.bookmarks.getTree().then(res=>{
+            if(res.length<=0)callback(error(404,'书签获取失败'))
+            else{
+                let roots=res[0]
+                if(roots.children.length<=0)callback(error(404,'书签获取失败'))
+                else{
+                    let root=roots.children[0]
+                    callback(success(root.children,'书签获取成功'))
+                }
+            }
+        })
+    },
+    /**
+     * 添加/修改书签
+     * @param {object} params 参数
+     * @param {function} callback 回调函数
+     */
+    setBookmark: (params,callback)=>{
+
+    },
+    /**
+     * 删除书签
+     * @param {object} params 参数
+     * @param {function} callback 回调函数 
+     */
+    removeBookmark: (params,callback)=>{
+
+    },
+    /**
+     * 获取指定url的Favicon
+     * @param {object} params 参数
+     * @param {function} callback 回调函数 
+     */
+    getFavicon: (params,callback)=>{
+        var u
+        try{
+            u=new URL(params.url)
+        }catch{
+            callback(error(404,'获取失败'))
+        }
+        callback(success(`${u.protocol}//${u.host}/favicon.ico`,'获取成功'))
+    }
 }
 /**
  * 服务调用成功后返回的数据

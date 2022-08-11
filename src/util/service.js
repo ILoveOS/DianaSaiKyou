@@ -48,5 +48,33 @@ export const Services={
      */
     clearOption(callback){
         callService('clearOption',{},res=>callback(res))
+    },
+    /**
+     * 获得书签
+     * @param {function} callback 回调函数 
+     */
+    getBookmarks(callback){
+        callService('getBookmarks',{},res=>callback(res))
+    },
+    /**
+     * 添加/修改书签
+     * @param {number | null} id 书签id,为null时表示新增
+     * @param {string} title 书签标题
+     * @param {string} url 书签链接
+     * @param {function} callback 回调函数
+     */
+    setBookmark(id,title,url,callback){
+        callService('setBookmark',{id:id,title:title,url:url},res=>callback(res))
+    },
+    /**
+     * 删除书签
+     * @param {number} id 书签id 
+     * @param {function} callback 回调函数
+     */
+    removeBookmark(id,callback){
+        callService('removeBookmark',{id:id},res=>callback(res))
+    },
+    getFavicon(url,callback){
+        callService('getFavicon',{url:url},res=>callback(res))
     }
 }

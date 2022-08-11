@@ -3,8 +3,8 @@
     <div class="text-center">
         <div class="container-fluid" style="width: 65%;">
         <!--图标-->
-        <img :src="$parent.Options.icon" @error="defaultIcon" width="100" height="100" class="mt-5">
-        <div class="input-group mt-4">
+        <img :src="$parent.Options.icon" @error="defaultIcon" width="100" height="100" class="mt-2">
+        <div class="input-group mt-2">
             <!--搜索引擎-->
             <select class="form-select" v-model="searchTool" style="max-width: 10%;">
                 <option value="0">百度</option>

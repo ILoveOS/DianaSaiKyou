@@ -4,8 +4,14 @@
     <div id="tab-main" :style="{ '--color': Options.color, '--backgroundColor': Options.backgroundColor }">
         <!--标题-->
         <title>{{ Options.title }}</title>
+        <!--选项按钮-->
+        <a target="blank" href="/option.html" style="font-size:32px; position:fixed; top:20px;right:20px">
+            <i class="bi bi-gear-fill"></i>
+        </a>
         <!--搜索框-->
         <SearchBar :_searchTool="Options.searchTool"></SearchBar>
+        <!--书签-->
+        <BookMark></BookMark>
         <!--音乐播放器，可以加载网易云电台播单-->
         <MusicPlayer :_playList="Options.playList"></MusicPlayer>
     </div>
@@ -14,6 +20,7 @@
 import { Services } from './util/service'
 import SearchBar from './components/tab/SearchBar.vue'
 import MusicPlayer from './components/tab/MusicPlayer.vue';
+import BookMark from './components/tab/BookMark.vue';
 export default {
     name: "TabVue",
     data() {
@@ -35,7 +42,7 @@ export default {
             });
         }
     },
-    components: { SearchBar, MusicPlayer }
+    components: { SearchBar, MusicPlayer, BookMark }
 }
 </script>
 <style>
