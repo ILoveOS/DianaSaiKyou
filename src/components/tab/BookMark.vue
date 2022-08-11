@@ -15,7 +15,7 @@
                     </div>
                 </a>
             </div>
-            <nav class="mt-2">
+            <nav class="mt-2" v-if="pages>1">
                 <ul class="pagination justify-content-center">
                     <li class="page-item" @click="this.curPage = this.curPage <= 0 ? this.pages - 1 : this.curPage - 1">
                         <a class="page-link" href="#">
