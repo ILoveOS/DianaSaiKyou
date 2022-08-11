@@ -1,3 +1,9 @@
+/**
+ * release版本更新
+ * @author 澄茜早睡早起
+ */
+
+
 /**引入jsonfile模块 */
 const fs=require('fs')
 
@@ -80,7 +86,6 @@ switch(command){
         break
     }
     default:{
-        console.error(`未知的命令:${command}. <Usage> node release major|minor|patch`)
         break
     }
 }

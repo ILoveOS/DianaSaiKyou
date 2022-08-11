@@ -6,11 +6,13 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "major": "node release major&&vue-cli-service build",
-    "minor": "node release minor&&vue-cli-service build",
-    "patch": "node release patch&&vue-cli-service build"
+    "major": "node release major&&vue-cli-service build&&node pkg",
+    "minor": "node release minor&&vue-cli-service build&&node pkg",
+    "patch": "node release patch&&vue-cli-service build&&node pkg",
+    "pkg": "vue-cli-service build&&node pkg"
   },
   "dependencies": {
+    "archiver": "^5.3.1",
     "bootstrap": "^5.2.0",
     "bootstrap-icons": "^1.9.1",
     "core-js": "^3.8.3",
