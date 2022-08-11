@@ -2,7 +2,7 @@
 <template>
     <!--绑定选项中的color和backgourndColor到css中-->
     <div class="text-center" :style="{ '--color': Options.color, '--backgroundColor': Options.backgroundColor }"
-        style="padding-left: 80px;padding-right:80px">
+        style="padding-left: 40px;padding-right:40px;width: 300px;">
         <!--图标-->
         <img width="128" height="128" :src="manifest.icons[128]">
         <!--插件名-->
@@ -15,6 +15,12 @@
         <span style="font-size:10px"><a @click="goHomePage" href="#">{{ manifest.author }}</a></span><br>
         <!--github-->
         <i class="bi bi-github" @click="goGithub" style="cursor: pointer;font-size: 20px;"></i>
+        <div v-if="hasNewVersion" style="font-size:10px">
+            <a href="#" @click="goLatestRelease">
+                <i class="bi bi-exclamation-circle-fill"></i>
+                <span>有新版本:{{latestVersionName}}</span>
+            </a>
+        </div>
     </div>
     <!--cursor跟随图片-->
     <img style="position:fixed;z-index: 99999;" :width="Options.cursorSize" :height="Options.cursorSize"
@@ -22,6 +28,7 @@
 </template>
 <script>
 import { Services } from './util/service';
+import { Octokit } from 'octokit';
 export default {
     name: 'PopupVue',
     data() {
@@ -32,19 +39,48 @@ export default {
             manifest: chrome.runtime.getManifest(),
             Options: {},
             /**
-             * github的repo信息
+             * 本地repo信息
              */
-            rep: {}
+            repo: {},
+            /**
+             * 远程release信息
+             */
+            latestVersion:'',
+            latestVersionName:'',
+            latestVersionUrl:''
+        }
+    },
+    computed:{
+        hasNewVersion(){
+            if(this.latestVersion==null)return false
+            else{
+                return this.latestVersion>this.repo.version
+            }
         }
     },
     mounted() {
         this.getOption()
         /**
-         * 加载github的repo信息
+         * 加载本地repo信息
+         * 同时检查github上的远程版本
          */
-        fetch('/rep.json').then(res => res.json()).then(res => {
-            this.rep = res
+        fetch('/repo.json').then(res => res.json()).then(res => {
+            this.repo = res
+            const octokit = new Octokit()
+            octokit.request('GET /repos/{owner}/{repo}/releases/latest',{
+                owner:this.repo.owner,
+                repo:this.repo.repo
+            }).then(res=>{
+                if(res.status==200){
+                    this.latestVersion=res.data.tag_name
+                    this.latestVersionName=res.data.name
+                    this.latestVersionUrl=res.data.html_url
+                }else{
+                    console.error('版本检查失败!')
+                }
+            }).catch(()=>{console.error('版本检查失败!')})
         })
+
         /**设置cursor跟随事件 */
         window.onmousemove = (event) => {
             document.getElementById('CURSOR').style.left = event.clientX + 20 + 'px'
@@ -70,7 +106,13 @@ export default {
          * 打开github地址
          */
         goGithub() {
-            chrome.tabs.create({ url: this.rep.url, selected: true }, () => { })
+            chrome.tabs.create({ url: this.repo.url, selected: true }, () => { })
+        },
+        /**
+         * 前往下载最新版本
+         */
+        goLatestRelease(){
+            chrome.tabs.create({ url: this.latestVersionUrl, selected: true }, () => { })
         }
     }
 }

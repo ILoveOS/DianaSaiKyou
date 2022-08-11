@@ -13,6 +13,7 @@
     "core-js": "^3.8.3",
     "crypto-js": "^4.1.1",
     "node-polyfill-webpack-plugin": "^2.0.1",
+    "octokit": "^2.0.5",
     "vue": "^3.2.13"
   },
   "devDependencies": {
