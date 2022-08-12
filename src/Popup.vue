@@ -19,8 +19,8 @@
             <a href="#" @click="goLatestRelease" style="font-size:10px">
                 <i class="bi bi-exclamation-circle-fill"></i>
                 <span>有新版本:{{latestVersionName}}</span>
-            </a>
-            <span class="text-muted">{{latestVersionDate.toLocaleString()}}</span>
+            </a><br>
+            <span class="text-muted" style="font-size:6px">{{latestVersionDate.toLocaleString()}}</span>
         </div>
         
     </div>
