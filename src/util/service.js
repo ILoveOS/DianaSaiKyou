@@ -74,6 +74,11 @@ export const Services={
     removeBookmark(id,callback){
         callService('removeBookmark',{id:id},res=>callback(res))
     },
+    /**
+     * 获取指定url的favicon
+     * @param {string} url
+     * @param {function} callback 回调函数
+     */
     getFavicon(url,callback){
         callService('getFavicon',{url:url},res=>callback(res))
     }

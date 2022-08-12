@@ -2,11 +2,15 @@
 <template>
     <div style="position:fixed;width: 100%; bottom: 20px;" class="text-center">
         <!--音乐的Cover图片-->
-        <img width="80" height="80" :src="musics[idx].cover==null?'/assets/musiccover.png':musics[idx].cover" @error="defaultMusicCover">
-        <!--名字-->
-        <h4>{{ musics[idx].name }}</h4>
-        <!--HH:MM:SS/HH:MM:SS格式的进度-->
-        <span class="text-muted">{{ progressText() }}</span>
+        <img :class="{ placeholder: !loaded }" width="80" height="80"
+            :src="musics[idx].cover == null ? '/assets/musiccover.png' : musics[idx].cover">
+        <div>
+            <!--名字-->
+            <h4 :class="{ placeholder: !loaded }">{{ musics[idx].name == null ? 'Loading' : musics[idx].name }}</h4>
+            <br v-if="!loaded">
+            <!--HH:MM:SS/HH:MM:SS格式的进度-->
+            <span class="text-muted" :class="{ placeholder: !loaded }">{{ progressText() }}</span>
+        </div>
         <!--播放器-->
         <video id="player" hidden :src="musics[idx].src" @canplay="init" @timeupdate="update" @ended="next"></video>
         <!--进度条-->
@@ -37,12 +41,15 @@
                         @click="this.idx = idx" class="container">
                         <table class="table" style="vertical-align: middle;">
                             <td style="width: 30px;">
-                                <img :src="item.cover" @error="defaultMusicCover" width="30" height="30">
+                                <img :class="{ placeholder: !loaded }" :src="item.cover == null ? '/assets/musiccover.png' : item.cover" width="30"
+                                    height="30">
                             </td>
                             <td scope="col">
-                                <span>{{ item.name }}</span><br>
-                                <span class="text-muted">
-                                    {{ time(item.duration) }}
+                                <span :class="{ placeholder: !loaded }">{{ item.name == null ? 'Loading...' :
+                                        item.name
+                                }}</span><br>
+                                <span class="text-muted" :class="{ placeholder: !loaded }">
+                                    {{ item.duration == null ? 'Loading...' : time(item.duration) }}
                                 </span>
                             </td>
                         </table>
@@ -147,7 +154,7 @@ export default {
         next() {
             if (this.loaded) {
                 if (this.idx + 1 >= this.musics.length) {
-                    this.curPage = (this.curPage+1) % Math.ceil(this.count / PAGESIZE)
+                    this.curPage = (this.curPage + 1) % Math.ceil(this.count / PAGESIZE)
                     this.loaded = false
                     loadMusics(this._playList, this.curPage, result => {
                         this.idx = 0
@@ -201,15 +208,6 @@ export default {
                 this.player.currentTime = seekPos * this.player.duration
                 this.current = this.player.currentTime
             }
-        },
-        /**
-         * 默认音乐Cover
-         * @param {event} e 
-         */
-        defaultMusicCover(e){
-            var ele=e.srcElement
-            ele.src='/assets/musiccover.png'
-            ele.onerror=null
         }
     },
     mounted() {

@@ -97,7 +97,7 @@ const Services = {
      * @param {function} callback 回调函数
      */
     setBookmark: (params,callback)=>{
-
+        
     },
     /**
      * 删除书签
@@ -105,13 +105,13 @@ const Services = {
      * @param {function} callback 回调函数 
      */
     removeBookmark: (params,callback)=>{
-
+        
     },
     /**
      * 获取指定url的Favicon
      * @param {object} params 参数
      * @param {function} callback 回调函数 
-     */
+     */ 
     getFavicon: (params,callback)=>{
         var u
         try{
