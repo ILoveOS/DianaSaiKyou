@@ -54,10 +54,21 @@ export default {
         }
     },
     computed:{
+        /**
+         * 版本比较
+         */
         hasNewVersion(){
-            if(this.latestVersion==null)return false
+            if(this.latestVersion==null||this.repo.version==null)return false
             else{
-                return this.latestVersion>this.repo.version
+                var s1=this.latestVersion.substring(1,this.latestVersion.length).split('.')
+                var s2=this.repo.version.substring(1,this.repo.version.length).split('.')
+                /**逐个比较major minor和patch版本 */
+                for(let i=0;i<3;i++){
+                    if(s1[i]!=s2[i]){
+                        return Number(s1[i])>Number(s2[i])
+                    }
+                }
+                return false
             }
         }
     },
