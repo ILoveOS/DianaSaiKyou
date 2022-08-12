@@ -19,6 +19,7 @@
             <a href="#" @click="goLatestRelease">
                 <i class="bi bi-exclamation-circle-fill"></i>
                 <span>有新版本:{{latestVersionName}}</span>
+                <span class="text-muted">{{latestVersionDate.toLocaleString()}}</span>
             </a>
         </div>
     </div>
@@ -47,7 +48,8 @@ export default {
              */
             latestVersion:'',
             latestVersionName:'',
-            latestVersionUrl:''
+            latestVersionUrl:'',
+            latestVersionDate:{}
         }
     },
     computed:{
@@ -75,6 +77,7 @@ export default {
                     this.latestVersion=res.data.tag_name
                     this.latestVersionName=res.data.name
                     this.latestVersionUrl=res.data.html_url
+                    this.latestVersionDate=new Date(res.data.published_at)
                 }else{
                     console.error('版本检查失败!')
                 }
