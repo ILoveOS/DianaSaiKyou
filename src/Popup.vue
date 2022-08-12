@@ -15,13 +15,14 @@
         <span style="font-size:10px"><a @click="goHomePage" href="#">{{ manifest.author }}</a></span><br>
         <!--github-->
         <i class="bi bi-github" @click="goGithub" style="cursor: pointer;font-size: 20px;"></i>
-        <div v-if="hasNewVersion" style="font-size:10px">
-            <a href="#" @click="goLatestRelease">
+        <div v-if="hasNewVersion">
+            <a href="#" @click="goLatestRelease" style="font-size:10px">
                 <i class="bi bi-exclamation-circle-fill"></i>
                 <span>有新版本:{{latestVersionName}}</span>
-                <span class="text-muted">{{latestVersionDate.toLocaleString()}}</span>
             </a>
+            <span class="text-muted">{{latestVersionDate.toLocaleString()}}</span>
         </div>
+        
     </div>
     <!--cursor跟随图片-->
     <img style="position:fixed;z-index: 99999;" :width="Options.cursorSize" :height="Options.cursorSize"
