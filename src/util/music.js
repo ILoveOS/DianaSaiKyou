@@ -112,8 +112,6 @@ export const loadMusics = (playlistRid, curPage, callback) => {
  * @returns {string|'00:00/00:00'}
  */
 export const progressTimeFormat = (canplay,current, duration) => {
-    if (canplay) {
-        return new Time(current).toString() + '/' + Time(duration).toString()
-    }
+    if (canplay) return new Time(current).toString() + '/' + Time(duration).toString()
     else return '00:00/00:00'
 }
