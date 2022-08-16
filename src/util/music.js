@@ -66,7 +66,7 @@ class Music {
     src
     /**
      * 根据api返回的数据构造Music对象
-     * @param {object} o 
+     * @param {{mainSong:{id:number,name:string},description:string,duration:number,coverUrl:string}} o 
      */
     constructor(o) {
         this.id = o.mainSong.id

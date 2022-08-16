@@ -41,7 +41,7 @@ const DefaultOption = {
 const Services = {
     /**
      * 设置选项
-     * @param {object} params 参数
+     * @param {{options:object}} params 参数
      * @param {function} callback 回调函数
      */
     setOption: (params, callback) => {
@@ -49,7 +49,7 @@ const Services = {
     },
     /**
      * 获取选项
-     * @param {object} params 参数
+     * @param {{}} params 参数
      * @param {function} callback 回调函数
      */
     getOption: (params, callback) => {
@@ -67,7 +67,7 @@ const Services = {
     },
     /**
      * 重置选项
-     * @param {objcet} params 参数
+     * @param {{}} params 参数
      * @param {function} callback 回调函数
      */
     clearOption: (params, callback) => {
@@ -75,7 +75,7 @@ const Services = {
     },
     /**
      * 获得书签
-     * @param {object} params 参数
+     * @param {{}} params 参数
      * @param {function} callback 回调函数 
      */
     getBookmarks: (params,callback)=>{
@@ -109,7 +109,7 @@ const Services = {
     },
     /**
      * 获取指定url的Favicon
-     * @param {object} params 参数
+     * @param {{url:string}} params 参数
      * @param {function} callback 回调函数 
      */ 
     getFavicon: (params,callback)=>{
@@ -125,15 +125,15 @@ const Services = {
 /**
  * 服务调用成功后返回的数据
  * @param {object} data 返回数据 
- * @param {stirng} message 信息 
- * @returns {{code:Number,data:Object,message:string}}
+ * @param {string} message 信息 
+ * @returns {{code:Number,data:object,message:string}}
  */
 const success = (data, message) => { return { code: 0, data: data, message: message } }
 /**
  * 服务调用失败后返回的数据
  * @param {number} code 返回代码
  * @param {string} message 信息
- * @returns {{code:Number,data:Object,message:string}}
+ * @returns {{code:Number,data:object,message:string}}
  */
 const error = (code, message) => { return { code: code, data: null, message: message } }
 /**
