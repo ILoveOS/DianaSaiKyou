@@ -18,28 +18,18 @@ export class Time {
      */
     constructor(secs) {
         secs = Math.floor(secs)
-        if (secs >= 60) {
-            this.min = Math.floor(secs / 60)
-            this.sec = secs % 60
-        } else {
-            this.sec = secs
-        }
-        if (this.min >= 60) {
-            this.min = this.min % 60
-            this.hour = Math.floor(this.min / 60)
-        }
+        this.sec=secs%60
+        this.min = Math.floor(secs / 60)
+        this.hour = Math.floor(this.min / 60)
+        this.min = this.min % 60
     }
     /**
-     * @returns {string} HH:MM:SS格式
+     * HH:MM:SS格式
+     * @returns {string} 
      */
     toString() {
-        let hFormat = ''
-        let mFormat = ''
-        let sFormat = ''
-        if (this.hour > 0) { hFormat = this.hour < 10 ? '0' + this.hour : this.hour }
-        mFormat = this.min < 10 ? ('0' + this.min) : this.min
-        sFormat = this.sec < 10 ? ('0' + this.sec) : this.sec
-        return `${hFormat != '' ? hFormat + ':' : ''}${mFormat}:${sFormat}`
+        if(this.hour>0)return `${this.hour<10?'0':''}${this.hour}:${this.min<10?'0':''}${this.min}:${this.sec<10?'0':''}${this.sec}`
+        else return `${this.min<10?'0':''}${this.min}:${this.sec<10?'0':''}${this.sec}`
     }
 }
 
@@ -123,8 +113,7 @@ export const loadMusics = (playlistRid, curPage, callback) => {
  */
 export const progressTimeFormat = (canplay,current, duration) => {
     if (canplay) {
-        let cur = new Time(current), dur = new Time(duration)
-        return cur.toString() + '/' + dur.toString()
+        return new Time(current).toString() + '/' + Time(duration).toString()
     }
     else return '00:00/00:00'
 }
