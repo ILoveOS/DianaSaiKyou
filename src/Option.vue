@@ -2,9 +2,7 @@
 <template>
     <!--标题-->
     <title>设置</title>
-    <!--绑定选项中的color和backgourndColor到css中-->
-    <div id="option-main" class="text-center"
-        :style="{ '--color': Options.color, '--backgroundColor': Options.backgroundColor }">
+    <div id="option-main" class="text-center">
         <div class="pt-3 pb-3" style="width:30%;display: inline-block;">
             <h5>设置</h5>
             <!--加载option中的每一项并根据其类型加载到相应的表单组件中-->
@@ -96,6 +94,14 @@ export default {
             }
         }
     },
+    watch:{
+        'Options.color'(newVal,oldVal){
+            document.documentElement.style.setProperty('--color',newVal)
+        },
+        'Options.backgroundColor'(newVal,oldVal){
+            document.documentElement.style.setProperty('--backgroundColor',newVal)
+        }
+    },
     mounted() {
         this.getOption()
         /**设置cursor跟随事件 */
@@ -151,23 +157,10 @@ export default {
 }
 </script>
 <style>
-html,
-body {
-    width: 100% !important;
-    height: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
+
 
 #option {
     height: auto;
-}
-
-* {
-    color: var(--color) !important;
-    border-color: var(--color) !important;
-    background-color: var(--backgroundColor) !important;
-    outline-color: var(--color) !important;
 }
 
 input[type='color'] {
@@ -182,9 +175,5 @@ input[type='color'] {
 
 ::-webkit-color-swatch {
     border-color: var(--color) !important;
-}
-
-img {
-    background-color: transparent !important;
 }
 </style>

@@ -1,8 +1,6 @@
 <!--弹出页，显示插件信息-->
 <template>
-    <!--绑定选项中的color和backgourndColor到css中-->
-    <div class="text-center" :style="{ '--color': Options.color, '--backgroundColor': Options.backgroundColor }"
-        style="padding-left: 40px;padding-right:40px;width: 300px;">
+    <div class="text-center" style="padding-left: 40px;padding-right:40px;width: 300px;">
         <!--图标-->
         <img width="128" height="128" :src="manifest.icons[128]">
         <!--插件名-->
@@ -51,6 +49,14 @@ export default {
             latestVersionName:'',
             latestVersionUrl:'',
             latestVersionDate:{}
+        }
+    },
+    watch:{
+        'Options.color'(newVal,oldVal){
+            document.documentElement.style.setProperty('--color',newVal)
+        },
+        'Options.backgroundColor'(newVal,oldVal){
+            document.documentElement.style.setProperty('--backgroundColor',newVal)
         }
     },
     computed:{
@@ -134,18 +140,10 @@ export default {
 </script>
 <style>
 html,
-body,
-#popup {
+body{
     width: 100%;
     height: auto;
     margin: 0;
     padding: 0;
-}
-
-* {
-    color: var(--color) !important;
-    border-color: var(--color) !important;
-    background-color: var(--backgroundColor) !important;
-    outline-color: var(--color) !important;
 }
 </style>

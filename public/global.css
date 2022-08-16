@@ -1,0 +1,15 @@
+html,
+body {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: var(--backgroundColor) !important;
+}
+* {
+    color: var(--color) !important;
+    border-color: var(--color) !important;
+    outline-color: var(--color) !important;
+    background-color: transparent !important;
+}
+

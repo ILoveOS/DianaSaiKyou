@@ -1,7 +1,6 @@
 <!--新标签页-->
 <template>
-    <!--绑定选项中的color和backgourndColor到css中-->
-    <div id="tab-main" :style="{ '--color': Options.color, '--backgroundColor': Options.backgroundColor }">
+    <div id="tab-main">
         <!--标题-->
         <title>{{ Options.title }}</title>
         <!--选项按钮-->
@@ -40,6 +39,14 @@ export default {
             document.getElementById('CURSOR').style.top = event.clientY + 'px'
         }
     },
+    watch:{
+        'Options.color'(newVal,oldVal){
+            document.documentElement.style.setProperty('--color',newVal)
+        },
+        'Options.backgroundColor'(newVal,oldVal){
+            document.documentElement.style.setProperty('--backgroundColor',newVal)
+        }
+    },
     methods: {
         /**
          * 调用Services.getOption获取storage中的选项
@@ -54,30 +61,8 @@ export default {
 }
 </script>
 <style>
-html,
-body,
-#tab,
-#tab-main {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-* {
-    color: var(--color) !important;
-    border-color: var(--color) !important;
-    background-color: var(--backgroundColor) !important;
-    outline-color: var(--color) !important;
-}
-
 .progress-bar {
     background-color: var(--color) !important;
-
-}
-
-img {
-    background-color: transparent !important;
 }
 
 .bi,
