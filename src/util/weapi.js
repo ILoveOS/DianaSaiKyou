@@ -14,7 +14,7 @@ const publicKey =
  * @param {Buffer} buffer 待加密数据
  * @param {Buffer} key 密钥
  * @param {Buffer} iv 偏移 
- * @returns 
+ * @returns {Buffer}
  */
 const aesEncrypt = (buffer,key, iv) => {
   const cipher = crypto.createCipheriv('aes-128-cbc', key, iv)
@@ -25,7 +25,7 @@ const aesEncrypt = (buffer,key, iv) => {
  * rsa公钥加密
  * @param {Buffer} buffer 
  * @param {string} key 密钥 
- * @returns 
+ * @returns {Buffer}
  */
 const rsaEncrypt = (buffer, key) => {
   buffer = Buffer.concat([Buffer.alloc(128 - buffer.length), buffer])
@@ -38,7 +38,7 @@ const rsaEncrypt = (buffer, key) => {
 /**
  * 网易云参数weapi加密
  * @param {object} object 
- * @returns 
+ * @returns {string} 加密后的weapi参数
  */
 export const weapiParam = (object) => {
   const text = JSON.stringify(object)

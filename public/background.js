@@ -126,14 +126,14 @@ const Services = {
  * 服务调用成功后返回的数据
  * @param {object} data 返回数据 
  * @param {stirng} message 信息 
- * @returns 
+ * @returns {{code:Number,data:Object,message:string}}
  */
 const success = (data, message) => { return { code: 0, data: data, message: message } }
 /**
  * 服务调用失败后返回的数据
  * @param {number} code 返回代码
  * @param {string} message 信息
- * @returns 
+ * @returns {{code:Number,data:Object,message:string}}
  */
 const error = (code, message) => { return { code: code, data: null, message: message } }
 /**

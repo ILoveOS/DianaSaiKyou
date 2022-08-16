@@ -67,7 +67,7 @@ if (location.pathname.match(/\/[0-9]+.*/)) {
 
     /**
      * 读取csrf
-     * @returns 当前登录用户的csrf或者null 
+     * @returns {{string|null}} 当前登录用户的csrf或者null 
      */
 
     const getCSRF = () => {
@@ -82,7 +82,7 @@ if (location.pathname.match(/\/[0-9]+.*/)) {
     /**
      * 将数据转为FormData
      * @param {objcet} data 数据 
-     * @returns 
+     * @returns {FormData}
      */
     const toFormData = data => {
         let formData = new FormData()

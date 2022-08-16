@@ -30,7 +30,7 @@ export class Time {
         }
     }
     /**
-     * @returns HH:MM:SS格式
+     * @returns {string} HH:MM:SS格式
      */
     toString() {
         let hFormat = ''
@@ -119,7 +119,7 @@ export const loadMusics = (playlistRid, curPage, callback) => {
  * @param {boolean} canplay 
  * @param {number} current 
  * @param {number} duration 
- * @returns 
+ * @returns {string|'00:00/00:00'}
  */
 export const progressTimeFormat = (canplay,current, duration) => {
     if (canplay) {
