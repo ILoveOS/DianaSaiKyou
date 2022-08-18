@@ -86,6 +86,10 @@ switch(command){
         break
     }
     default:{
+        if(command.match(/[0-9]+\.[0-9]+\.[0-9]+/)){
+            writeVersion(command)
+            console.log(`已修改版本为${command}`)
+        }
         break
     }
 }
