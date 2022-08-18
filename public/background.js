@@ -93,19 +93,41 @@ const Services = {
     },
     /**
      * 添加/修改书签
-     * @param {object} params 参数
+     * @param {{id?:string,title?:string,url?:string}} params 参数
      * @param {function} callback 回调函数
      */
     setBookmark: (params,callback)=>{
-        
+        if(params.id!=null){
+            let changes={}
+            if(params.title!=null)changes.title=params.title
+            if(params.url!=null)changes.url=params.url
+            chrome.bookmarks.update(params.id,changes,res=>callback(success(res,'书签修改成功 ')))
+        }
+        else{
+            if(params.title==null||params.url==null||params.title.trim()==''||params.url.trim()=='')callback(error(500,'标题或url不能为空'))
+            else{
+                chrome.bookmarks.getTree().then(res=>{
+                    if(res.length<=0)callback(error(404,'书签文件夹访问失败'))
+                    else{
+                        let roots=res[0]
+                        if(roots.children.length<=0)callback(error(404,'书签文件夹访问失败'))
+                        else{
+                            let root=roots.children[0]
+                            chrome.bookmarks.create({parentId:root.id,title:params.title,url:params.url},res=>callback(success(res,'书签添加成功')))
+                        }
+                    }
+                })
+                
+            }
+        }
     },
     /**
      * 删除书签
-     * @param {object} params 参数
+     * @param {{id:string}} params 参数
      * @param {function} callback 回调函数 
      */
     removeBookmark: (params,callback)=>{
-        
+        chrome.bookmarks.remove(params.id,res=>callback(success(res,'书签删除成功')))
     },
     /**
      * 获取指定url的Favicon

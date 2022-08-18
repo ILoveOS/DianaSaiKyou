@@ -18,7 +18,7 @@ const callService=(service,params,callback)=>{
         if(res!=null&&res.code!=null&&res.code==0){
             callback(res.data)
         }else{
-            if(res!=null)console.log(res.message)
+            if(res!=null)alert(res.message)
         }
     })
 }
@@ -58,7 +58,7 @@ export const Services={
     },
     /**
      * 添加/修改书签
-     * @param {number | null} id 书签id,为null时表示新增
+     * @param {string | null} id 书签id,为null时表示新增
      * @param {string} title 书签标题
      * @param {string} url 书签链接
      * @param {function} callback 回调函数
@@ -68,7 +68,7 @@ export const Services={
     },
     /**
      * 删除书签
-     * @param {number} id 书签id 
+     * @param {string} id 书签id 
      * @param {function} callback 回调函数
      */
     removeBookmark(id,callback){
