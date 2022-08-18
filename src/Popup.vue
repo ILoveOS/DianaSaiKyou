@@ -103,10 +103,10 @@ export default {
         })
 
         /**设置cursor跟随事件 */
-        window.onmousemove = (event) => {
+        window.addEventListener('mousemove', event => {
             document.getElementById('CURSOR').style.left = event.clientX + 20 + 'px'
             document.getElementById('CURSOR').style.top = event.clientY + 'px'
-        }
+        })
     },
     methods: {
         /**

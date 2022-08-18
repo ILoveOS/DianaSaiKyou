@@ -26,6 +26,7 @@ if (location.pathname.match(/\/[0-9]+.*/)) {
      */
     const WHEEL_WRAPPER = document.createElement('div')
     const WHEEL_BUTTON = document.createElement('img')
+    WHEEL_BUTTON.id='DianaSaiKyou-Inject-Wheel-Btn'
     /**
      * 独轮车配置
      */
@@ -121,14 +122,6 @@ if (location.pathname.match(/\/[0-9]+.*/)) {
             WHEEL_CONFIG.WHEEL_RUNNING = !WHEEL_CONFIG.WHEEL_RUNNING
         }
     }
-
-    /**
-     * 为独轮车按钮绑定开关
-     */
-    WHEEL_BUTTON.onclick = () => {
-        toggle()
-        WHEEL_BUTTON.src = WHEEL_CONFIG.WHEEL_RUNNING ? WHEEL_CONFIG.WHEEL_START_IMG : WHEEL_CONFIG.WHEEL_PAUSE_IMG
-    }
     /**
      * 设置样式并添加到document中
      */
@@ -145,9 +138,17 @@ if (location.pathname.match(/\/[0-9]+.*/)) {
     WHEEL_WRAPPER.append(WHEEL_BUTTON)
     document.body.append(WHEEL_WRAPPER)
     /**
+     * 为独轮车按钮绑定开关
+     */
+    document.getElementById('DianaSaiKyou-Inject-Wheel-Btn').onclick = () => {
+        toggle()
+        document.getElementById('DianaSaiKyou-Inject-Wheel-Btn').src = WHEEL_CONFIG.WHEEL_RUNNING ? WHEEL_CONFIG.WHEEL_START_IMG : WHEEL_CONFIG.WHEEL_PAUSE_IMG
+    }
+
+    /**
      * 调用background的getOption服务获取选项
      */
-    chrome.runtime.sendMessage({service:'getOption',params:{}}, res => {
+    chrome.runtime.sendMessage({ service: 'getOption', params: {} }, res => {
         if (res.code == 0) {
             let options = res.data
             WHEEL_DATA.msg = options.wheelText
@@ -155,7 +156,7 @@ if (location.pathname.match(/\/[0-9]+.*/)) {
             WHEEL_CONFIG.WHEEL_START_IMG = options.wheelStartImg
             WHEEL_CONFIG.WHEEL_PAUSE_IMG = options.wheelPauseImg
             WHEEL_CONFIG.WHEEL_LOADED = true
-            WHEEL_BUTTON.src = WHEEL_CONFIG.WHEEL_RUNNING ? WHEEL_CONFIG.WHEEL_START_IMG : WHEEL_CONFIG.WHEEL_PAUSE_IMG
+            document.getElementById('DianaSaiKyou-Inject-Wheel-Btn').src = WHEEL_CONFIG.WHEEL_RUNNING ? WHEEL_CONFIG.WHEEL_START_IMG : WHEEL_CONFIG.WHEEL_PAUSE_IMG
         } else {
             console.log(res.message)
         }
