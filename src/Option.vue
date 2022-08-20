@@ -11,7 +11,7 @@
                 <span>{{ OptionNames[idx] }}</span>
                 <!--普通的input-->
                 <input
-                    v-if="OptionTypes[idx] != 'select' && OptionTypes[idx] != 'img' && OptionTypes[idx] != 'textarea'"
+                    v-if="OptionTypes[idx] != 'select' && OptionTypes[idx] != 'img' && OptionTypes[idx] != 'textarea' && OptionTypes[idx]!='range'"
                     class="form-control" :class="{ 'form-control-color': OptionTypes[idx] == 'color' }"
                     :type="OptionTypes[idx]" v-model="Options[idx]">
                 <!--Select-->
@@ -29,6 +29,11 @@
                 <textarea class="form-control" maxlength="40" v-if="OptionTypes[idx] == 'textarea'"
                     v-model="Options[idx]">
                 </textarea>
+                <!--range-->
+                <div v-if="OptionTypes[idx]=='range'">
+                    <input type="range" class="form-control" :min="OptionRanges[idx].min" :max="OptionRanges[idx].max" v-model="Options[idx]">
+                    <span class="range-value">{{Options[idx]}}</span>
+                </div>
             </div>
             <!--保存和重置按钮-->
             <button @click="setOption" class="btn btn-primary" style="margin-right:20px">保存</button>
@@ -78,19 +83,23 @@ export default {
                 searchTool: 'select',
                 icon: 'img',
                 cursor: 'img',
-                cursorSize: 'number',
+                cursorSize: 'range',
                 progressIcon: 'img',
                 playList: 'text',
                 wheelText: 'textarea',
                 wheelStartImg: 'img',
                 wheelPauseImg: 'img',
-                wheelInterval: 'number'
+                wheelInterval: 'range'
             },
             /**
              * select值
              */
             OptionSelects: {
                 searchTool: ['百度', 'Google', 'Bing']
+            },
+            OptionRanges:{
+                cursorSize:{min:20,max:80},
+                wheelInterval:{min:6000,max:20000}
             }
         }
     },

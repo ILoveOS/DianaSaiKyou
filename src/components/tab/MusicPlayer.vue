@@ -21,10 +21,14 @@
             <img :src="$parent.Options.progressIcon" width="30" height="30"
                 style="z-index: 9999;margin-left: -15px;margin-top: -10px;" @error="defaultProgressIcon">
         </div>
-        <!--音量-->
-        <input type="range" min="0" max="1" step="0.05" v-model="player.volume">
         <!--工具栏-->
         <div style="font-size: 36px; vertical-align: middle;">
+            <!--音量-->
+            <div style="position:fixed;left: 20px;font-size: 14px; margin-top: 16px; vertical-align: middle;">
+                音量
+                <input type="range" min="0" max="100" step="1" v-model="volume">
+                <span class="range-value">{{ volume }}</span>
+            </div>
             <!--上一首-->
             <i class="bi bi-skip-start-fill" @click="pre"></i>
             <!--播放-->
@@ -41,7 +45,8 @@
                         @click="this.idx = idx" class="container">
                         <table class="table" style="vertical-align: middle;">
                             <td style="width: 30px;">
-                                <img :class="{ placeholder: !loaded }" :src="item.cover == null ? '/assets/musiccover.png' : item.cover" width="30"
+                                <img :class="{ placeholder: !loaded }"
+                                    :src="item.cover == null ? '/assets/musiccover.png' : item.cover" width="30"
                                     height="30">
                             </td>
                             <td scope="col">
@@ -83,7 +88,8 @@ export default {
             //播放状态
             playing: false,
             //musics是否加载完成
-            loaded: false
+            loaded: false,
+            volume: 100
         }
     },
     watch: {
@@ -106,6 +112,9 @@ export default {
          */
         idx(newVal, oldVal) {
             this.canplay = false
+        },
+        volume(newVal, oldVal) {
+            this.player.volume = newVal / 100
         }
     },
     methods: {

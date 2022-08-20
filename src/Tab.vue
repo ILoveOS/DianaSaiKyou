@@ -69,19 +69,4 @@ export default {
 .progress {
     cursor: pointer !important;
 }
-
-input[type='range'] {
-    -webkit-appearance: none;
-    height: 3px;
-    background-color: var(--color) !important;
-}
-
-input[type='range']::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    border: solid 1px var(--color);
-    background-color: var(--color) !important;
-}
 </style>

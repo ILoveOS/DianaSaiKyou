@@ -16,3 +16,22 @@ body {
     background-color: transparent !important;
 }
 
+input[type='range'] {
+    -webkit-appearance: none;
+    height: 3px !important;
+    background-color: var(--color) !important;
+    vertical-align:middle;
+}
+
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    border: solid 1px var(--color);
+    background-color: var(--backgroundColor) !important;
+}
+
+.range-value{
+    vertical-align:middle;
+}
