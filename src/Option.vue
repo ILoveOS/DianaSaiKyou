@@ -166,8 +166,6 @@ export default {
 }
 </script>
 <style>
-
-
 #option {
     height: auto;
 }
@@ -184,5 +182,9 @@ input[type='color'] {
 
 ::-webkit-color-swatch {
     border-color: var(--color) !important;
+}
+.btn-danger{
+    background-color: var(--color) !important;
+    color: var(--backgroundColor) !important;
 }
 </style>

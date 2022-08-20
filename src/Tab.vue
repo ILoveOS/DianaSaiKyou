@@ -63,8 +63,11 @@ export default {
 <style>
 .progress-bar {
     background-color: var(--color) !important;
+    border-radius: var(--bs-progress-border-radius) !important; 
 }
-
+.progress{
+    border: 2px solid var(--color) !important;
+}
 .bi,
 .progress {
     cursor: pointer !important;

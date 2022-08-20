@@ -203,8 +203,7 @@ export default {
          * 更新进度
          */
         update() {
-            if (this.canplay)
-                this.current = this.player.currentTime
+            this.current = this.player.currentTime
         },
         /**
          * 修改进度

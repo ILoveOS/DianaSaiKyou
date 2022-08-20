@@ -6,7 +6,7 @@
         <img :src="$parent.Options.icon" @error="defaultIcon" width="100" height="100" class="mt-2">
         <div class="input-group mt-2">
             <!--搜索引擎-->
-            <select class="form-select" v-model="searchTool" style="max-width: 10%;">
+            <select class="form-select" v-model="searchTool" style="max-width: 11%;">
                 <option value="0">百度</option>
                 <option value="1">Google</option>
                 <option value="2">Bing</option>

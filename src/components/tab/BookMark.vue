@@ -62,7 +62,7 @@
                 style="width:76px;height:100px;display:inline-block;margin-left:10px;margin-right:10px">
                 <a style="text-decoration:none" target="blank">
                     <!--图标-->
-                    <i style="font-size:46px" class="bi bi-plus"></i>
+                    <i style="font-size:44px" class="bi bi-plus"></i>
                     <!--标题-->
                     <div class="card-body"
                         style="overflow:hidden;text-overflow: ellipsis;white-space:nowrap;padding-top:4px;padding-bottom:0;padding-left:3px;padding-right:3px">
