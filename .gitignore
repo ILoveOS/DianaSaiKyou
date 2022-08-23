@@ -2,8 +2,8 @@
 node_modules
 /dist
 # bootstrap source
-/public/bootstrap/scss
-/public/bootstrap/js/src
+/public/bootstrap/scss/
+/public/bootstrap/js/src/
 
 # local env files
 .env.local
