@@ -39,7 +39,7 @@
                 style="width:76px;height:100px;display:inline-block;margin-left:10px;margin-right:10px"
                 v-for="(item, i) in bookmarks" :key="i" @mouseenter="this.toolVisable[i] = true"
                 @mouseleave="this.toolVisable[i] = false">
-                <a :href="item.url" style="text-decoration:none" target="blank">
+                <a :href="item.url" style="text-decoration:none" target="_blank">
                     <!--图标-->
                     <img width="56" height="56" style="border-radius:50%;margin-top:10px" :src="item.icon"
                         @error="defaultBookmarkIcon">

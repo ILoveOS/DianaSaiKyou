@@ -68,7 +68,7 @@ export default {
         search(){
             var tool=SearchTools[this.searchTool]
             var href=`${tool.url}?${tool.param}=${this.searchKey}`
-            window.open(href,'blank')
+            window.open(href,'_blank')
         },
         /**
          * enter键按下后搜索

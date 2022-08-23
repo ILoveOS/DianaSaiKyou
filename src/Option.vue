@@ -71,7 +71,9 @@ export default {
                 wheelText: '独轮车内容',
                 wheelStartImg: '独轮车启动图标',
                 wheelPauseImg: '独轮车停止图标',
-                wheelInterval: '独轮车间隔(毫秒)'
+                wheelInterval: '独轮车间隔(毫秒)',
+                dynUid: '动态推送Uid',
+                dynQueryInterval: '动态推送查询间隔(分钟)'
             },
             /**
              * 选项类型
@@ -89,7 +91,9 @@ export default {
                 wheelText: 'textarea',
                 wheelStartImg: 'img',
                 wheelPauseImg: 'img',
-                wheelInterval: 'range'
+                wheelInterval: 'range',
+                dynUid:'text',
+                dynQueryInterval: 'range'
             },
             /**
              * select值
@@ -99,7 +103,8 @@ export default {
             },
             OptionRanges:{
                 cursorSize:{min:20,max:80},
-                wheelInterval:{min:6000,max:20000}
+                wheelInterval:{min:6000,max:20000},
+                dynQueryInterval:{min:1,max:10}
             }
         }
     },
