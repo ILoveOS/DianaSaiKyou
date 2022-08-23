@@ -4,6 +4,7 @@ node_modules
 # bootstrap source
 /public/bootstrap/scss/
 /public/bootstrap/js/src/
+/public/bootstrap-icons/font/index.html
 
 # local env files
 .env.local
