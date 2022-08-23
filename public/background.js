@@ -194,8 +194,9 @@ const getLatestDynamic = (uid, callback) => {
                     console.log(`Query Dynamics After ${new Date(latestDynamicTime * 1000).toLocaleString()}`)
                     for (let i = 0; i < dynamics.length; i++) {
                         let dyn = JSON.parse(dynamics[i].card)
-                        dyn.item.dyn_id = dynamics[i].desc.dynamic_id_str
-                        if (dyn.item.timestamp > latestDynamicTime) latests.push(dyn)
+                        dyn.dyn_id = dynamics[i].desc.dynamic_id_str
+                        dyn.timestamp = dynamics[i].desc.timestamp
+                        if(dyn.timestamp > latestDynamicTime) latests.push(dyn)
                         else break
                     }
                 }
@@ -216,23 +217,24 @@ const getLatestDynamic = (uid, callback) => {
 
 /**
  * 推送动态
- * @param {{item:{timestamp:number,dyn_id:string,content:string},user:{face:string,uname:string}}} dynamic 
+ * @param {{item:{content:string},user:{face:string,uname:string},timestamp:number,dyn_id:string}} dynamic 
  */
 const NotifyDynamic = dynamic => {
     let t = '1秒前'
-    if (dynamic.item.timestamp != null) {
-        t = Math.floor(new Date().getTime() / 1000) - dynamic.item.timestamp
+    if (dynamic.timestamp != null) {
+        t = Math.floor(new Date().getTime() / 1000) - dynamic.timestamp
         if (t > 60) {
             if (t > 3600) t = `${Math.floor(t / 3600)}小时前`
             else t = `${Math.floor(t / 60)}分钟前`
         } else t = `${t}秒前`
     }
-    if (dynamic.item.dyn_id != null) {
-        chrome.notifications.create(dynamic.item.dyn_id, {
+    if (dynamic.dyn_id != null) {
+        let content=dynamic.item==null?'该动态没有内容':dynamic.item.content
+        chrome.notifications.create(dynamic.dyn_id, {
             type: 'basic',
             iconUrl: dynamic.user.face ? dynamic.user.face : chrome.runtime.getURL('/assets/icon.png'),
             title: `${dynamic.user.uname ? dynamic.user.uname : 'uname获取失败'}发布了新动态`,
-            message: dynamic.item.content ? dynamic.item.content : '内容获取失败',
+            message: content,
             contextMessage: t
         }, id => console.log(`动态推送通知${id}已发布`))
     }
