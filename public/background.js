@@ -217,35 +217,75 @@ const getLatestDynamic = (uid, callback) => {
 
 /**
  * 推送动态
- * @param {{item:{content:string},user:{face:string,uname:string},timestamp:number,dyn_id:string}} dynamic 
+ * @param {{item:{content?:string,description?:string},desc?:string,aid?:number,user?:{head_url?:string,name?:string,face?:string,uname?:string},owner?:{face:string,name:string},timestamp:number,dyn_id:string,origin?:object}} dynamic 
  */
 const NotifyDynamic = dynamic => {
     let t = '1秒前'
     if (dynamic.timestamp != null) {
         t = Math.floor(new Date().getTime() / 1000) - dynamic.timestamp
         if (t > 60) {
-            if (t > 3600) t = `${Math.floor(t / 3600)}小时前`
+            if (t > 3600) {
+                if(t>3600*24)t=`${Math.floor(t/(3600*24))}天前`
+                else t = `${Math.floor(t / 3600)}小时前`
+            }
             else t = `${Math.floor(t / 60)}分钟前`
         } else t = `${t}秒前`
     }
     if (dynamic.dyn_id != null) {
-        let content=dynamic.item==null?'该动态没有内容':dynamic.item.content
-        chrome.notifications.create(dynamic.dyn_id, {
+        let id,content,face,title
+        /**投稿动态 */
+        if(dynamic.aid!=null){
+            content=dynamic.desc
+            face=dynamic.owner.face
+            title=`${dynamic.owner.name}发布了投稿`
+            id=`VIDEO${dynamic.aid}`
+        }else{
+            id=`DYNAMIC${dynamic.dyn_id}`
+            let name
+            /**日常动态 */
+            if(dynamic.item.category=='daily'){
+                content=dynamic.item.description 
+                face=dynamic.user.head_url
+                name=dynamic.user.name
+            }
+            /**非日常动态 */
+            else {
+                content=dynamic.item.content
+                face=dynamic.user.face
+                name=dynamic.user.uname
+            }
+            /**转发动态 */
+            if(dynamic.origin!=null){
+                title=`${name}转发了一条动态`
+            }
+            /**普通动态 */
+            else{
+                title=`${name}发布了动态`
+            }
+        }
+        chrome.notifications.create(id, {
             type: 'basic',
-            iconUrl: dynamic.user.face ? dynamic.user.face : chrome.runtime.getURL('/assets/icon.png'),
-            title: `${dynamic.user.uname ? dynamic.user.uname : 'uname获取失败'}发布了新动态`,
+            iconUrl: face,
+            title: title,
             message: content,
             contextMessage: t
-        }, id => console.log(`动态推送通知${id}已发布`))
+        }, i => console.log(`动态推送通知${i}已发布`))
     }
 }
 
 /**
  * 设置点击进入动态链接
  */
-chrome.notifications.onClicked.addListener(dyn_id => {
-    chrome.tabs.create({
-        url: `https://t.bilibili.com/${dyn_id}`
+chrome.notifications.onClicked.addListener((dyn_id) => {
+    let url=null
+    if(dyn_id.startsWith('VIDEO')){
+        url=`https://www.bilibili.com/video/av${dyn_id.replace('VIDEO','')}`
+    }
+    else if(dyn_id.startsWith('DYNAMIC')){
+        url=`https://t.bilibili.com/${dyn_id.replace('DYNAMIC','')}`
+    }
+    if(url!=null)chrome.tabs.create({
+        url:url 
     })
 })
 
