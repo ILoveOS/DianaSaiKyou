@@ -17,6 +17,8 @@ const DefaultOption = {
     color: '#E799B0',
     //电台节目rid
     playList: '959370203',
+    //播放模式(0:列表循环,1:单曲循环,2:随机播放)
+    playMode:0,
     //搜索引擎id
     searchTool: 0,
     //图标

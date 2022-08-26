@@ -12,7 +12,7 @@
             <span class="text-muted" :class="{ placeholder: !loaded }">{{ progressText() }}</span>
         </div>
         <!--播放器-->
-        <video id="player" hidden :src="musics[idx].src" @canplay="init" @timeupdate="update" @ended="next"></video>
+        <video id="player" hidden :src="musics[idx].src" @canplay="init" @timeupdate="update" @ended="end"></video>
         <!--进度条-->
         <div id="progress" @click="seek" class="progress" style="height: 10px; overflow: visible;">
             <div class="progress-bar" role="progressbar" :style="{ width: `${current / player.duration * 100}%` }"
@@ -23,11 +23,20 @@
         </div>
         <!--工具栏-->
         <div style="font-size: 36px; vertical-align: middle;">
-            <!--音量-->
             <div style="position:fixed;left: 20px;font-size: 14px; margin-top: 16px; vertical-align: middle;">
-                音量
-                <input type="range" min="0" max="100" step="1" v-model="volume">
-                <span class="range-value">{{ volume }}</span>
+                <!--音量-->
+                <div>
+                    音量
+                    <input type="range" min="0" max="100" step="1" v-model="volume">
+                    <span class="range-value">{{ volume }}</span>
+                </div>
+                <!--播放模式-->
+                <i class="bi" :class="[playModes[playMode].icon]"></i>
+                <select v-model="playMode">
+                    <option v-for="(op, i) in playModes" :value="i" :key="i">
+                        {{op.text}}
+                    </option>
+                </select>
             </div>
             <!--上一首-->
             <i class="bi bi-skip-start-fill" @click="pre"></i>
@@ -68,7 +77,7 @@
 import { PAGESIZE, loadMusics, progressTimeFormat, Time } from '../../util/music'
 export default {
     name: 'MusicPlayer',
-    props: ['_playList'],
+    props: ['_playList','_playMode'],
     data() {
         return {
             //播放器
@@ -89,7 +98,12 @@ export default {
             playing: false,
             //musics是否加载完成
             loaded: false,
-            volume: 100
+            //音量
+            volume: 100,
+            //播放模式
+            playMode:0,
+            //播放模式信息
+            playModes:[{icon:'bi-arrow-right',text:'顺序播放'},{icon:'bi-arrow-clockwise',text:'单曲循环'},{icon:'bi-shuffle',text:'随机播放'}]
         }
     },
     watch: {
@@ -104,6 +118,14 @@ export default {
                 this.count = result.count
                 this.loaded = true
             })
+        },
+        /**
+         * 当_playModel加载/修改后同步组件的playMode的值
+         * @param {number} newVal 新值 
+         * @param {number} oldVal 
+         */
+        _playMode(newVal,oldVal){
+            this.playMode=newVal
         },
         /**
          * 当idx修改后重新加载player
@@ -215,6 +237,34 @@ export default {
                 let seekPos = e.offsetX / document.getElementById('progress').clientWidth
                 this.player.currentTime = seekPos * this.player.duration
                 this.current = this.player.currentTime
+            }
+        },
+        /**
+         * 随机选择
+         */
+        rand(){
+            let i=Math.floor(Math.random()*this.count)
+            let page=Math.floor(i/PAGESIZE)
+            if(page==this.curPage)this.idx=i%PAGESIZE
+            else{
+                this.loaded = false
+                loadMusics(this._playList,page,result=>{
+                    this.curPage=page
+                    this.idx = i%PAGESIZE
+                    this.musics = result.musics
+                    this.loaded = true
+                })
+            }
+        },
+        /**
+         * 当前歌曲播放结束后
+         */
+        end(){
+            switch(this.playMode){
+                case 0:this.next();break
+                case 1:this.play();break
+                case 2:this.rand();break
+                default:this.next();break
             }
         }
     },

@@ -17,7 +17,7 @@
                 <!--Select-->
                 <select v-if="OptionTypes[idx] == 'select'" class="form-select" v-model="Options[idx]">
                     <option v-for="(op, i) in OptionSelects[idx]" :value="i" :key="i">
-                        {{ op }}
+                        {{op}}
                     </option>
                 </select>
                 <!--图片-->
@@ -68,6 +68,7 @@ export default {
                 cursorSize: '光标附加图片大小',
                 progressIcon: '进度条图标',
                 playList: '播单rid',
+                playMode: '播放模式',
                 wheelText: '独轮车内容',
                 wheelStartImg: '独轮车启动图标',
                 wheelPauseImg: '独轮车停止图标',
@@ -88,6 +89,7 @@ export default {
                 cursorSize: 'range',
                 progressIcon: 'img',
                 playList: 'text',
+                playMode: 'select',
                 wheelText: 'textarea',
                 wheelStartImg: 'img',
                 wheelPauseImg: 'img',
@@ -99,7 +101,8 @@ export default {
              * select值
              */
             OptionSelects: {
-                searchTool: ['百度', 'Google', 'Bing']
+                searchTool: ['百度', 'Google', 'Bing'],
+                playMode:['顺序播放','单曲循环','随机播放']
             },
             OptionRanges:{
                 cursorSize:{min:20,max:80},

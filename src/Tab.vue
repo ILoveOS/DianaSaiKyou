@@ -12,7 +12,7 @@
         <!--书签-->
         <BookMark></BookMark>
         <!--音乐播放器，可以加载网易云电台播单-->
-        <MusicPlayer :_playList="Options.playList"></MusicPlayer>
+        <MusicPlayer :_playList="Options.playList" :_playMode="Options.playMode"></MusicPlayer>
     </div>
     <!--cursor跟随图片-->
     <img style="position:fixed;z-index: 99999;" :width="Options.cursorSize" :height="Options.cursorSize"
