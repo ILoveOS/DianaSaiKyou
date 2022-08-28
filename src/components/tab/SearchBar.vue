@@ -67,7 +67,7 @@ export default {
          */
         search(){
             var tool=SearchTools[this.searchTool]
-            var href=`${tool.url}?${tool.param}=${this.searchKey}`
+            var href=`${tool.url}?${tool.param}=${encodeURIComponent(this.searchKey)}`
             window.open(href,'_blank')
         },
         /**
