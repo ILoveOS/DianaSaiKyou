@@ -70,8 +70,8 @@ export default {
                 playList: '播单rid',
                 playMode: '播放模式',
                 wheelText: '独轮车内容',
-                wheelStartImg: '独轮车启动图标',
-                wheelPauseImg: '独轮车停止图标',
+                wheelStartImg: '独轮车启动中图标',
+                wheelPauseImg: '独轮车停止状态图标',
                 wheelInterval: '独轮车间隔(毫秒)',
                 dynUid: '动态推送Uid',
                 dynQueryInterval: '动态推送查询间隔(分钟)'
